@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const list = [
+const javascript = [
   {
     title: 'React',
     url: 'https://reactjs.org/',
@@ -13,6 +13,25 @@ const list = [
     title: 'Redux',
     url: 'https://redux.js.org/',
     author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  },
+];
+
+const ruby = [
+  {
+    title: 'Bottles of OOP',
+    url: 'https://sandimetz.com/99bottles',
+    author: 'Sandi Metz',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'PODR',
+    url: 'https://www.informit.com/store/practical-object-oriented-design-an-agile-primer-using-9780134456478?ranMID=24808',
+    author: 'Sandi Metz',
     num_comments: 2,
     points: 5,
     objectID: 1,
@@ -32,7 +51,7 @@ function Item({item}) {
   );
 }
 
-function List () {
+function List ({list}) {
   return (
     <ul>
       {list.map(function (item) {
@@ -64,7 +83,9 @@ function App() {
 
       <hr />
 
-      <List />
+      <List list = {ruby} />
+
+      <List list = {javascript} />
     </div>
   );
 }
