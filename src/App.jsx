@@ -19,18 +19,26 @@ const list = [
   },
 ];
 
+function Item({item}) {
+  return (
+    <div>
+      <h2>
+        <a href={item.url}>{item.title}</a>
+      </h2>
+      <h3> Author: {item.author}</h3>
+      <p> Comments: {item.num_comments}</p>
+      <p> Points: {item.points}</p>
+    </div>
+  );
+}
+
 function List () {
   return (
     <ul>
       {list.map(function (item) {
       return (
         <li key={item.objectID}>
-        <h2>
-          <a href={item.url}>{item.title}</a>
-        </h2>
-        <h3> Author: {item.author}</h3>
-        <p> Comments: {item.num_comments}</p>
-        <p> Points: {item.points}</p>
+          <Item item={item} />
         </li>
       )
     })}
