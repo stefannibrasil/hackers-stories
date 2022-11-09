@@ -19,29 +19,44 @@ const list = [
   },
 ];
 
+function List () {
+  return (
+    <ul>
+      {list.map(function (item) {
+      return (
+        <li key={item.objectID}>
+        <h2>
+          <a href={item.url}>{item.title}</a>
+        </h2>
+        <h3> Author: {item.author}</h3>
+        <p> Comments: {item.num_comments}</p>
+        <p> Points: {item.points}</p>
+        </li>
+      )
+    })}
+    </ul>
+  );
+}
+
+function Search () {
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" />
+    </div>
+  );
+}
+
 function App() {
   return (
     <div>
       <h1>My Hacker Stories</h1>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+
+      <Search />
 
       <hr />
 
-      <ul>
-        {list.map(function (item) {
-          return (
-            <li key={item.objectID}>
-              <h2>
-                <a href={item.url}>{item.title}</a>
-              </h2>
-              <h3> Author: {item.author}</h3>
-              <p> Comments: {item.num_comments}</p>
-              <p> Points: {item.points}</p>
-            </li>
-          )
-        })}
-      </ul>
+      <List />
     </div>
   );
 }
