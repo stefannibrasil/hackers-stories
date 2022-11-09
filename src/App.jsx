@@ -32,12 +32,12 @@ function App() {
         {list.map(function (item) {
           return (
             <li key={item.objectID}>
-              <span>
+              <h2>
                 <a href={item.url}>{item.title}</a>
-              </span>
-              <span> Author: {item.author}</span>
-              <span> Comments: {item.num_comments}</span>
-              <span> Points: {item.points}</span>
+              </h2>
+              <h3> Author: {item.author}</h3>
+              <p> Comments: {item.num_comments}</p>
+              <p> Points: {item.points}</p>
             </li>
           )
         })}
