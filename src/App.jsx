@@ -75,9 +75,9 @@ const App = () => {
     setSearchTerm(event.target.value);
   }
 
-  const searchedStories = ruby.filter(function (story){
-    return story.title.includes(searchTerm);
-  })
+  const searchedStories = ruby.filter((story) =>
+    story.title.includes(searchTerm)
+  );
 
   return (
     <div>
