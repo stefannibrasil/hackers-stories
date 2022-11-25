@@ -75,6 +75,9 @@ const App = () => {
     setSearchTerm(event.target.value);
   }
 
+  const stories = [ruby, javascript]
+
+  // next: map each array and filter their items
   const searchedStories = ruby.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
