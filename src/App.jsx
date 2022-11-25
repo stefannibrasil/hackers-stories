@@ -22,16 +22,10 @@ const List = (props) => (
 );
 
 const Search = (props) => {
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleChange = (event) => {
-    props.onSearch(event);
-  }
-
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange}/>
+      <input id="search" type="text" onChange={props.onSearch}/>
     </div>
   );
 }
@@ -75,9 +69,15 @@ const App = () => {
     },
   ];
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   const handleSearch = (event) => {
-    console.log(event.target.value);
+    setSearchTerm(event.target.value);
   }
+
+  const searchedStories = ruby.filter(function (story){
+    return story.title.includes(searchTerm);
+  })
 
   return (
     <div>
@@ -87,9 +87,7 @@ const App = () => {
 
       <hr />
 
-      <List list={ruby} />
-
-     <List list={javascript} />
+      <List list={searchedStories} />
     </div>
   );
 };
