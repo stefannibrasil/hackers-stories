@@ -16,7 +16,7 @@ const Item = (props) => (
 const List = (props) => (
   <ul>
     {props.list.map((item) => (
-      <Item key={item.objectID} item={item} />
+      <Item key={item.title} item={item} />
   ))}
   </ul>
 );
@@ -75,10 +75,9 @@ const App = () => {
     setSearchTerm(event.target.value);
   }
 
-  const stories = [ruby, javascript]
+  const stories = ruby.concat(javascript)
 
-  // next: map each array and filter their items
-  const searchedStories = ruby.filter((story) =>
+  const searchedStories = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
