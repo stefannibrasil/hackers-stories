@@ -1,14 +1,22 @@
 import * as React from 'react';
 
-const Item = ({item}) => (
+const Item = ({
+  item: {
+    title,
+    url,
+    author,
+    num_comments,
+    points,
+  },
+}) => (
   <li>
     <span>
       <h2>
-        <a href={item.url}>{item.title}</a>
+        <a href={url}>{title}</a>
       </h2>
-      <h3> Author: {item.author}</h3>
-      <p> Comments: {item.num_comments}</p>
-      <p> Points: {item.points}</p>
+      <h3> Author: {author}</h3>
+      <p> Comments: {num_comments}</p>
+      <p> Points: {points}</p>
     </span>
   </li>
 );
