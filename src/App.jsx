@@ -1,34 +1,32 @@
 import * as React from 'react';
 
-const Item = (props) => (
+const Item = ({item}) => (
   <li>
     <span>
       <h2>
-        <a href={props.item.url}>{props.item.title}</a>
+        <a href={item.url}>{item.title}</a>
       </h2>
-      <h3> Author: {props.item.author}</h3>
-      <p> Comments: {props.item.num_comments}</p>
-      <p> Points: {props.item.points}</p>
+      <h3> Author: {item.author}</h3>
+      <p> Comments: {item.num_comments}</p>
+      <p> Points: {item.points}</p>
     </span>
   </li>
 );
 
-const List = (props) => (
+const List = ({list}) => (
   <ul>
-    {props.list.map((item) => (
+    {list.map((item) => (
       <Item key={item.title} item={item} />
   ))}
   </ul>
 );
 
-const Search = (props) => {
-  return (
-    <div>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" value={props.search} onChange={props.onSearch}/>
-    </div>
-  );
-}
+const Search = ({ search, onSearch }) => (
+  <div>
+    <label htmlFor="search">Search: </label>
+    <input id="search" type="text" value={search} onChange={onSearch}/>
+  </div>
+)
 
 const App = () => {
   const javascript = [
@@ -69,7 +67,7 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('React');
+  const [searchTerm, setSearchTerm] = React.useState('PODR');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
