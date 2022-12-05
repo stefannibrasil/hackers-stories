@@ -1,31 +1,21 @@
 import * as React from 'react';
 
-const Item = ({
-  item: {
-    title,
-    url,
-    author,
-    num_comments,
-    points,
-  },
-}) => (
+const Item = ({ item }) => (
   <li>
     <span>
-      <h2>
-        <a href={url}>{title}</a>
-      </h2>
-      <h3> Author: {author}</h3>
-      <p> Comments: {num_comments}</p>
-      <p> Points: {points}</p>
+      <a href={item.url}>{item.title}</a>
     </span>
+    <span>{item.author}</span>
+    <span>{item.num_comments}</span>
+    <span>{item.points}</span>
   </li>
 );
 
-const List = ({list}) => (
+const List = ({ list }) => (
   <ul>
     {list.map((item) => (
-      <Item key={item.title} item={item} />
-  ))}
+      <Item key={item.objectID} item={item} />
+    ))}
   </ul>
 );
 
