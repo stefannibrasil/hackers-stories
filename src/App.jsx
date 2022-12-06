@@ -34,7 +34,7 @@ const App = () => {
       author: 'Jordan Walke',
       num_comments: 3,
       points: 4,
-      objectID: 0,
+      objectID: 2,
     },
     {
       title: 'Redux',
@@ -42,7 +42,7 @@ const App = () => {
       author: 'Dan Abramov, Andrew Clark',
       num_comments: 2,
       points: 5,
-      objectID: 1,
+      objectID: 3,
     },
   ];
   
@@ -65,7 +65,13 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('PODR');
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem('search') ?? ''
+  );
+
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm);
+  }, [searchTerm]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
