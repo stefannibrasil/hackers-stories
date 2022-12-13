@@ -55,7 +55,7 @@ const useStorageState = (key, initialState) => {
 };
 
 const App = () => {
-  const javascript = [
+  const initialStories = [
     {
       title: 'React',
       url: 'https://reactjs.org/',
@@ -72,9 +72,6 @@ const App = () => {
       points: 5,
       objectID: 3,
     },
-  ];
-  
-  const ruby = [
     {
       title: 'Bottles of OOP',
       url: 'https://sandimetz.com/99bottles',
@@ -102,9 +99,7 @@ const App = () => {
     'PODR'
   )
 
-  const initialStores = ruby.concat(javascript)
-
-  const [stories, setStories] = React.useState(initialStores);
+  const [stories, setStories] = React.useState(initialStories);
 
   const searchedStories = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
