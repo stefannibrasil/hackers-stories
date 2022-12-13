@@ -90,6 +90,14 @@ const App = () => {
     },
   ];
 
+  const getAsyncStories = () =>
+    new Promise((resolve) =>
+      setTimeout(
+        resolve({ data: { stories: initialStories } }),
+        2000
+      )
+    );
+
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
   }
@@ -99,7 +107,13 @@ const App = () => {
     'PODR'
   )
 
-  const [stories, setStories] = React.useState(initialStories);
+  const [stories, setStories] = React.useState([]);
+
+  React.useEffect(() => {
+    getAsyncStories().then(result => {
+      setStories(result.data.stories);
+    });
+  }, []);
 
   const searchedStories = stories.filter((story) =>
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
