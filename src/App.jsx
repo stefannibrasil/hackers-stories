@@ -54,50 +54,9 @@ const useStorageState = (key, initialState) => {
   return [value, setValue];
 };
 
+const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
+
 const App = () => {
-  const initialStories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org/',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 2,
-    },
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 3,
-    },
-    {
-      title: 'Bottles of OOP',
-      url: 'https://sandimetz.com/99bottles',
-      author: 'Sandi Metz',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    },
-    {
-      title: 'PODR',
-      url: 'https://www.informit.com/store/practical-object-oriented-design-an-agile-primer-using-9780134456478?ranMID=24808',
-      author: 'Sandi Metz',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    },
-  ];
-
-  const getAsyncStories = () =>
-    new Promise((resolve) =>
-      setTimeout(
-        resolve({ data: { stories: initialStories } }),
-        2000
-      )
-    );
-
   const StoriesReducer = (state, action) => {
     switch(action.type) {
       case 'STORIES_FETCH_INIT':
@@ -111,6 +70,7 @@ const App = () => {
           ...state,
           isLoading: false,
           isError: false,
+          data: action.payload,
         };
       case 'STORIES_FETCH_ERROR':
         return {
@@ -136,7 +96,7 @@ const App = () => {
 
   const [searchTerm, setSearchTerm] = useStorageState(
     'search',
-    'PODR'
+    'React'
   )
 
   const [stories, dispatchStories] = React.useReducer(
@@ -147,15 +107,16 @@ const App = () => {
   React.useEffect(() => {
     dispatchStories({type: 'STORIES_FETCH_INIT'});
 
-    getAsyncStories()
-      .then((result) => {
-        dispatchStories({
-          type: 'STORIES_FETCH_SUCCESS',
-          payload: result.data.stories,
-        });
-      })
-      .catch(() =>
-        dispatchStories({type: 'STORIES_FETCH_ERROR'}));
+    fetch(`${API_ENDPOINT}ruby`)
+    .then((response) => response.json())
+    .then((result) => {
+      dispatchStories({
+        type: 'STORIES_FETCH_SUCCESS',
+        payload: result.hits,
+      });
+    })
+    .catch(() =>
+      dispatchStories({type: 'STORIES_FETCH_ERROR'}));
   }, []);
 
   const searchedStories = stories.data.filter((story) =>
