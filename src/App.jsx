@@ -90,6 +90,9 @@ const App = () => {
     },
   ];
 
+  const setStoriesAction = 'SET_STORIES';
+  const removeStoryAction = 'REMOVE_STORY';
+
   const getAsyncStories = () =>
     new Promise((resolve) =>
       setTimeout(
@@ -97,6 +100,19 @@ const App = () => {
         2000
       )
     );
+
+  const StoriesReducer = (state, action) => {
+    switch(action.type) {
+      case setStoriesAction:
+        return action.payload;
+      case removeStoryAction:
+        return state.filter(
+          (story) => action.payload.objectID !== story.objectID
+        );
+      default:
+        throw new Error();
+    };
+  }
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -107,17 +123,25 @@ const App = () => {
     'PODR'
   )
 
-  const [stories, setStories] = React.useState([]);
+  const [stories, dispatchStories] = React.useReducer(
+    StoriesReducer,
+    []
+  );
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
 
   React.useEffect(() => {
-    setIsLoading(false)
-    getAsyncStories().then(result => {
-      setIsLoading(false);
-      setStories(result.data.stories);
-    })
-    .catch(() => setIsError(true));
+    setIsLoading(true);
+
+    getAsyncStories()
+      .then((result) => {
+        dispatchStories({
+          type: setStoriesAction,
+          payload: result.data.stories,
+        });
+        setIsLoading(false);
+      })
+      .catch(() => setIsError(true));
   }, []);
 
   const searchedStories = stories.filter((story) =>
@@ -125,12 +149,11 @@ const App = () => {
   );
 
   const handleRemoveStory = (item) => {
-    const newStories = stories.filter(
-      (story) => item.objectID !== story.objectID
-    )
-
-    setStories(newStories);
-  }
+    dispatchStories({
+      action: removeStoryAction,
+      payload: item,
+    });
+  };
 
   return (
     <div>
