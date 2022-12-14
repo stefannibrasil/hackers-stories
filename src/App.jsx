@@ -108,11 +108,16 @@ const App = () => {
   )
 
   const [stories, setStories] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoading(false)
     getAsyncStories().then(result => {
+      setIsLoading(false);
       setStories(result.data.stories);
-    });
+    })
+    .catch(() => setIsError(true));
   }, []);
 
   const searchedStories = stories.filter((story) =>
@@ -140,7 +145,13 @@ const App = () => {
 
       <hr />
 
-      <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+      {isError && <p>Something went wrong ...</p>}
+
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+      )}
     </div>
   );
 };
