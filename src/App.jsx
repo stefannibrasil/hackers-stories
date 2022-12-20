@@ -57,40 +57,40 @@ const useStorageState = (key, initialState) => {
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
-const App = () => {
-  const StoriesReducer = (state, action) => {
-    switch(action.type) {
-      case 'STORIES_FETCH_INIT':
-        return {
-          ...state,
-          isLoading: true,
-          isError: false,
-        };
-      case 'STORIES_FETCH_SUCCESS':
-        return {
-          ...state,
-          isLoading: false,
-          isError: false,
-          data: action.payload,
-        };
-      case 'STORIES_FETCH_ERROR':
-        return {
-          ...state,
-          isLoading: false,
-          isError: true,
-        };
-      case 'REMOVE_STORY':
-        return {
-          ...state,
-          data: state.filter(
-            (story) => action.payload.objectID !== story.objectID
-          ),
-        };
-      default:
-        throw new Error();
-    };
-  }
+const StoriesReducer = (state, action) => {
+  switch(action.type) {
+    case 'STORIES_FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case 'STORIES_FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        data: action.payload,
+      };
+    case 'STORIES_FETCH_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    case 'REMOVE_STORY':
+      return {
+        ...state,
+        data: state.filter(
+          (story) => action.payload.objectID !== story.objectID
+        ),
+      };
+    default:
+      throw new Error();
+  };
+}
 
+const App = () => {
   const [searchTerm, setSearchTerm] = useStorageState(
     'search',
     'React'
